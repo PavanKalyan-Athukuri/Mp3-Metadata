@@ -19,7 +19,7 @@ public class SongInfo {
     @Autowired
     Songs s;
     public File[] getSongs(){
-        File folder = new File("/home/venkatapavanathukuri/IdeaProjects/Extract-metadata-mp3/folder");
+        File folder = new File("/home/venkatapavanathukuri/IdeaProjects/Mp3-Metadata/folder");
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -42,14 +42,23 @@ public class SongInfo {
             ParseContext context = new ParseContext();
             parser.parse(stream, handler, metadata, context);
             String[] metadataNames = metadata.names();
-            String arr[] = new String[9];
+            String[] metadatainfo = new String[9];
             int i=0;
-            for (String name : metadataNames) {
-                arr[i] = metadata.get(name);
+            for (String name: metadataNames) {
+                metadatainfo[i] = metadata.get(name);
+                System.out.println(name +"   "+metadata.get(name));
                 i++;
             }
-
-            songsRepository.save(new Songs(k,arr[1],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7]));
+            int j=1;
+            s.setId(k);
+            s.setAudioSampleRate(metadatainfo[j++]);
+            s.setChannels(metadatainfo[j++]);
+            s.setAudioCompressor(metadatainfo[j++]);
+            s.setAudioChannelType(metadatainfo[j++]);
+            s.setVersion(metadatainfo[j++]);
+            s.setDuration(metadatainfo[j++]);
+            s.setContentType(metadatainfo[j++]);
+            songsRepository.save(s);
             k++;
         }
         return songs;
