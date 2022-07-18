@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metadata-config
+  labels:
+    app: metadata
+data:
+  POSTGRES_DB: phenom
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_HOST: postgres

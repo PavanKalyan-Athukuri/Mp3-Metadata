@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "songs")
@@ -38,10 +39,10 @@ public class Songs {
     @Column
     private String version;
     @Column
-    private String duration;
+    private BigDecimal duration;
     @Column
     private String contentType;
-    public Songs(int id,String audioSampleRate,String channels,String audioCompressor,String audioChannelType,String version,String duration,String contentType){
+    public Songs(int id,String audioSampleRate,String channels,String audioCompressor,String audioChannelType,String version,BigDecimal duration,String contentType){
         this.id = id;
         this.audioSampleRate = audioSampleRate;
         this.channels = channels;
@@ -92,11 +93,11 @@ public class Songs {
         this.version = version;
     }
 
-    public String getDuration() {
+    public BigDecimal getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(BigDecimal duration) {
         this.duration = duration;
     }
 

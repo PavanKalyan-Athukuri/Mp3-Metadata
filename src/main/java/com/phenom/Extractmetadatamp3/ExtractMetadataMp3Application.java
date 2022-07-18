@@ -26,3 +26,4 @@ public class ExtractMetadataMp3Application {
 	}
 
 }
+//172.17.0.3:5432

@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metadata
+spec:
+  selector:
+    app: metadata
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8085
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metadata
+spec:
+  selector:
+    matchLabels:
+      app: metadata
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: metadata
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: metadata
+          image: pavan0911/metadata:1.1
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8083
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: metadata-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: metadata-config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: metadata-config
+                  key: POSTGRES_PASSWORD
